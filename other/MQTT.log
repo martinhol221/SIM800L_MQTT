@@ -1,1 +1,80 @@
-.
+MQTT | TEL:+375290000000 | 12/12/2017
+<0>
+AT+CFUN=1,1
+
+OK
+
+
+RDY
+
++CFUN: 1
+
+
++CPIN: READY
+
+
+Call Ready
+
+
+SMS Ready
+
+AT+CMGDA="DEL ALL";+CLIP=1;+DDET=1
+
+Vbat=7.40| int: 2| Timer:0 | Temp0= 22.06 | Temp1= 21.94 
+
+OK
+
+Vbat=7.37| int: 1| Timer:0 | Temp0= 22.25 | Temp1= 22.12 
+AT+SAPBR=3,1, "Contype","GPRS"
+
+OK
+
+AT+SAPBR=3,1, "APN","internet.mts.by"
+
+OK
+
+AT+SAPBR=1,1
+
+OK
+
+AT+SAPBR=2,1
+
++SAPBR: 1,1,"100.78.6.XXX"
+
+OK
+
+AT+CIPSTART="TCP","m23.cloudmqtt.com","10077"
+
+OK
+
+
+CONNECT OK
+
+AT+CIPSEND
+
+> -<0>MQIsdpÂ<0><<0>CITROEN<0qXXXXXXy<0>lXXXXXXXXXs0<0>	C5/statusÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¾‚<0><0>	C5/comand<0>
+
+SEND OK
+
+ <0><0>
+<0><0>
+Vbat=7.40| int: 6| Timer:0 | Temp0= 22.31 | Temp1= 22.19 
+Vbat=7.38| int: 5| Timer:0 | Temp0= 22.31 | Temp1= 22.19 
+Vbat=7.40| int: 4| Timer:0 | Temp0= 22.37 | Temp1= 22.25 
+Vbat=7.38| int: 3| Timer:0 | Temp0= 22.37 | Temp1= 22.25 
+Vbat=7.38| int: 2| Timer:0 | Temp0= 22.44 | Temp1= 22.31 
+Vbat=7.40| int: 1| Timer:0 | Temp0= 22.44 | Temp1= 22.31 
+AT+CIPSEND
+
+> 0
+<0>C5/ds022.440
+<0>C5/ds122.310
+<0>C5/vbat7.400
+<0>	C5/uptime80
+
+SEND OK
+
+Vbat=7.38| int: 6| Timer:0 | Temp0= 22.50 | Temp1= 22.37 
+Vbat=7.40| int: 5| Timer:0 | Temp0= 22.50 | Temp1= 22.37 
+Vbat=7.38| int: 4| Timer:0 | Temp0= 22.56 | Temp1= 22.44 
+
