@@ -5,5 +5,13 @@
 
 
 [MQTT Dash (IoT, Smart Home)](https://play.google.com/store/apps/details?id=net.routix.mqttdash&hl=ru)
+
+
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-5.jpg)
+
+TOPIC `C5/ds0` - Температура 1
+TOPIC `C5/ds1` - Температура 2
+TOPIC `C5/vbat`- Напряжение
+TOPIC `C5/uptime` - Время работы
+
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-6.jpg)
