@@ -19,3 +19,7 @@ TOPIC `C5/uptime` - Время работы
 
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-6.jpg)
+
+Расход трафика с постоянно открытой сессией, 10.5 кб/час х 24 часа х 30 дней = 7.6 Мб в месяц  
+
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtttrafic.JPG)
