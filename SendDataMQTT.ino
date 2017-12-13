@@ -32,6 +32,7 @@ void setup() {
   SIM800.begin(9600);              //скорость связи с модемом
   Serial.println("MQTT |12/12/2017"); 
   delay (1000);
+  SIM800.println("AT+CFUN=1,1");
              }
 
 
