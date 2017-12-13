@@ -24,7 +24,9 @@ TOPIC `C5/uptime` - Время работы
 
 `const char MQTT_CID[15] = "AAAAAA";`        имя устройства, придумать
 
-`String MQTT_SERVER = "m23.cloudmqtt.com"; `  Server
+`String MQTT_SERVER = "m23.cloudmqtt.com";`  Server
+
+`String PORT = "10077";`                  
 
 Консоль для отладки и наглядного просмотра трафика идущего от устройства
 
