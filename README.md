@@ -30,7 +30,6 @@ TOPIC `C5/uptime` - Время работы
 
 * шрифт крупный
 
-
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-6.jpg)
 
 и т д, получится так.
