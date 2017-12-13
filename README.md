@@ -18,6 +18,8 @@ TOPIC `C5/uptime` - Время работы
 
 настройки брокера в скетче
 
+`const char MQTT_user[10] = "qXXXXXXy";`      User
+
 `const char MQTT_pass[15] = "lXXXXXXXXXXs";`  Password   
 
 `const char MQTT_CID[15] = "AAAAAA";`        имя устройства, придумать
