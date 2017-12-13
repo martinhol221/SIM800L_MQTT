@@ -16,6 +16,12 @@ TOPIC `C5/uptime` - Время работы
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-3.jpg)
 
+настройки брокера в скетче
+
+`const char MQTT_pass[15] = "lXXXXXXXXXXs";`  Password     
+`const char MQTT_CID[15] = "AAAAAA";`        имя устройства, придумать
+`String MQTT_SERVER = "m23.cloudmqtt.com"; `  Server
+
 Консоль для отладки и наглядного просмотра трафика идущего от устройства
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-4.jpg)
