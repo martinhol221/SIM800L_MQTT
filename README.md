@@ -1,4 +1,4 @@
-# SIM800L_MQTT Management of devices on the GSM modem SIM800L and Arduino using the MQTT protocol
+Management of devices on the GSM modem SIM800L and Arduino using the MQTT protocol
 
 Тестовая передача показаний с датчиков в топики
 
@@ -29,58 +29,58 @@ TOPIC `C5/uptime` - Время работы
 
 ## Connection to MCTT Broker
 
-`AT+SAPBR=3,1, "Contype","GPRS"` - connection setup, response `OK`
+`AT+SAPBR=3,1, "Contype","GPRS"` - настройка параметров соединения, ответ `OK`
 
-`AT+SAPBR=3,1, "APN","internet.mts.by"` - setting the access point of the cellular operator, the answer `OK` 
+`AT+SAPBR=3,1, "APN","internet.mts.by"` - установка точки доступа, ответ `OK` 
 
-`AT+SAPBR=1,1` - setting up GPRS connection, reply `OK` 
+`AT+SAPBR=1,1` - установка GPRS соединения, ответ `OK` 
 
-`AT+SAPBR=2,1` - connection status request, response `+SAPBR: 1,1,"100.78.6.XXX"`
+`AT+SAPBR=2,1` - проверка соединения, ответ `+SAPBR: 1,1,"100.78.6.XXX"`
 
-`AT+CIPSTART="TCP","m23.cloudmqtt.com",\"10077"` - connection to the broker, the answer `CONNECT OK`
+`AT+CIPSTART="TCP","m23.cloudmqtt.com",\"10077"` - установка связи с сервером, ответ `CONNECT OK`
 
-`AT+CIPSEND` - data transfer command
+`AT+CIPSEND` - команда на отпраку пакета
 
-> authorization package `MQTT_CON()` 
+> пакет авторизации `MQTT_CON()` 
 
-> publishing package `MQTT_PUB()`
+> пакет публикации `MQTT_PUB()`
 
-> subscription package `MQTT_SUB()`
+> пакет подписки `MQTT_SUB()`
 
-`1A` - end byte
+`1A` - байт окончания передачи пакета
 
 ## Состав пакета авторизации (MQTT_CON) 
 
 `10 2D 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 07 43 49 54 52 4F 45 4E 00 08 64 72 69 76 65 32 72 75 00 0C 6D 61 72 74 69 6E 68 6F 6C 32 32 31 `
 
 
-`10` authorization package token
+`10` маркер авторизации
 
-`2D` - total length of the entire authentication package 2D (HEX)  = 42 (DEC) byte, from the next byte to the end
+`2D` - общая длинна пакета подписки от следующего байта и до конца пакета 2D (HEX)  = 42 (DEC) byte
 
-`00` - constantly
+`00` - константа
 
-`06` - protocol length 06 (HEX)  = 6 (DEC) byte
+`06` - длинна протокола 06 (HEX)  = 6 (DEC) byte
 
-`4D 51 49 73 64 70` -the type of the protocol itself, ASCII  `MQIsdp`
+`4D 51 49 73 64 70` - сам протокол, в ASCII  `MQIsdp`
 
-`03 C2 00 3C 00` - constantly
+`03 C2 00 3C 00` - постоянная
 
-`07` - device name length 07 (HEX)  = 7 (DEC)  byte
+`07` - длинна имени устройства 07 (HEX)  = 7 (DEC)  byte
 
 `43 49 54 52 4F 45 4E` - само имя устройства , оно же в ASCII  `CITROEN`
 
-`00`  - constantly
+`00`  - константа
 
-`08` - length of login 08 (HEX)  = 8 (DEC)  byte
+`08` - длинна логина 08 (HEX)  = 8 (DEC)  byte
 
-`64 72 69 76 65 32 72 75` - the login, it's in the ASCII  `drive2ru`
+`64 72 69 76 65 32 72 75` - сам логин, в ASCII  `drive2ru`
 
-`00`  - constantly
+`00`  - константа
 
-`0C` - password length 0C (HEX)  = 12 (DEC) байт
+`0C` - длинна пароля 0C (HEX)  = 12 (DEC) байт
 
-`6D 61 72 74 69 6E 68 6F 6C 32 32 31`  - the password itself, it's in the ASCII  `martinhol221`
+`6D 61 72 74 69 6E 68 6F 6C 32 32 31`  - сам пароль, в ASCII  `martinhol221`
 
 ## Состав пакета публикации (MQTT_PUB) 
 
