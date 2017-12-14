@@ -28,33 +28,8 @@ TOPIC `C5/uptime` - Время работы
 
 `String PORT = "10077";`                  
 
-Консоль для отладки и наглядного просмотра трафика идущего от устройства
 
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-4.jpg)
-
-Загружаем приложение [MQTT Dash (IoT, Smart Home)](https://play.google.com/store/apps/details?id=net.routix.mqttdash&hl=ru)
-
-Вводим сервер, порт, логин и пароль полученный выше. Добовляем элемент типа "Текст":
-
-*  Имя "любое"
-
-* Топик `C5/ds0`
-
-* шрифт крупный
-
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-6.jpg)
-
-и т д, получится так.
-
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-5.jpg)
-
-Расход трафика с постоянно открытой сессией, 10.5 кб/час х 24 часа х 30 дней = 7.6 Мб в месяц  
-
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtttrafic.JPG)
-
-
-# Порядок передачи данных
-
+# Работа скетча
 
 ## Подключение к броккеру
 
@@ -144,8 +119,6 @@ TOPIC `C5/uptime` - Время работы
 
 `00` - постоянно
 
-
-
 # Отправка данных раз в 60 секунд
 
 `41 54 2B 43 49 50 53 45 4E 44 0D 0A    30 0D 00 06 43 35 2F 64 73 30 31 32 2E 33 30   30 0D 00 06 43 35 2F 64 73 31 31 35 2E 34 35   30 0D 00 07 43 35 2F 76 62 61 74 30 2E 30 30   30 0C 00 09 43 35 2F 75 70 74 69 6D 65 31   1A`
@@ -161,3 +134,30 @@ TOPIC `C5/uptime` - Время работы
 `30 0C 00 09 43 35 2F 75 70 74 69 6D 65 39 ` - публикуем  `C5/uptime9` - 9 сек в топик C5/uptime
 
 `1A` - байт окончания передачи данных
+
+
+
+Консоль для отладки и наглядного просмотра трафика идущего от устройства
+
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-4.jpg)
+
+Загружаем приложение [MQTT Dash (IoT, Smart Home)](https://play.google.com/store/apps/details?id=net.routix.mqttdash&hl=ru)
+
+Вводим сервер, порт, логин и пароль полученный выше. Добовляем элемент типа "Текст":
+
+*  Имя "любое"
+
+* Топик `C5/ds0`
+
+* шрифт крупный
+
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-6.jpg)
+
+и т д, получится так.
+
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-5.jpg)
+
+Расход трафика с постоянно открытой сессией, 10.5 кб/час х 24 часа х 30 дней = 7.6 Мб в месяц  
+
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtttrafic.JPG)
+
