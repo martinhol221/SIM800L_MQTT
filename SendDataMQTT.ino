@@ -18,6 +18,7 @@ String MQTT_SERVER = "m23.cloudmqtt.com";   // api.cloudmqtt.com > Details > Ser
 String PORT = "10077";                      // api.cloudmqtt.com > Details > Port    порт MQTT брокера
 /*  ----------------------------------------- ДАЛЕЕ НЕ ТРОГАЕМ --------------------------------------------------------------------   */
 String at = "";
+String str = "";
 float TempDS[11];                  // массив хранения температуры c рахных датчиков 
 float Vbat;                        // переменная хранящая напряжение бортовой сети
 float m = 69.91;                   // делитель для перевода АЦП в вольты для резистров 39/11kOm
@@ -39,10 +40,10 @@ void setup() {
 void loop() {
 /*  --------------------------------------------------- НАЛИЗИРУЕМ БУФЕР ВИРТУАЛЬНОГО ПОРТА МОДЕМА---------------------------------- */ 
   if (SIM800.available()) {                                               // если что-то пришло от SIM800 в SoftwareSerial Ардуино
-    while (SIM800.available()) k = SIM800.read(), at += char(k),delay(1); // набиваем в переменную at
-    Serial.println(at);                                                   // Возвращаем ответ можема в монитор порта
-    response ();                                                          // отправляем ответ для разбора
-    at = "";              }                                               // очищаем переменную
+    while (SIM800.available()) k = SIM800.read(),at += char(k),str += String(k,HEX),delay(1);  // набиваем в переменную at
+   Serial.print("Ответ в ACII     "), Serial.println(at),Serial.print("Ответ в HEX    "), Serial.println(str);      // Возвращаем ответ можема в монитор порта
+    response ();                                                         // отправляем ответ для разбора
+    at = "", str = "";   }                                               // очищаем переменные
    
 if (millis()> Time1 + 10000) Time1 = millis(), detection();               // выполняем функцию detection () каждые 10 сек 
 
@@ -87,10 +88,14 @@ void response (){
       if (at.indexOf("AT+SAPBR=3,1, \"Contype\",\"GPRS\"\r\r\nOK") > -1 ) {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""),delay (500); 
      } else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )  {SIM800.println("AT+SAPBR=1,1"),delay (1000); // устанавливаем соеденение   
      } else if (at.indexOf("AT+SAPBR=1,1\r\r\nOK") > -1 )  {SIM800.println("AT+SAPBR=2,1"),        delay (1000);    // проверяем статус соединения  
-    /*  ------------------------------------------------ конектимся к MQTT брокеру -------------------------------------------------------------------- */                            
+    /*  ------------------------------------------------ конектимся к MQTT брокеру -------------------------------------------------------------------- */       
+                     
      } else if (at.indexOf("+SAPBR: 1,1") > -1 )    {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);
     /*  ------------------------------------------------ авторизуемся  у MQTT брокера ----------------------------------------------------------------- */  
      } else if (at.indexOf("CONNECT OK\r\n") > -1 )    MQTT_CONNECT ();   // пакет авторизации, публикации и пдписки у брокера
+
+     if (str.indexOf("636f6d616e643132337374617274") > -1 ) Serial.println ("Команда принята старт ");  // временный костыль  comand123start
+
 } 
 
 
@@ -150,5 +155,3 @@ void  MQTT_SUB (const char MQTT_topic[15]) {
   SIM800.write(MQTT_topic);                         // топик
   SIM800.write((byte)0);                            // 0x00
                      }
-
-                   
