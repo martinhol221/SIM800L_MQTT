@@ -27,61 +27,60 @@ TOPIC `C5/uptime` - Время работы
 
 # Работа скетча
 
-## Подключение к броккеру
+## Connection to MCTT Broker
 
-`AT+SAPBR=3,1, "Contype","GPRS"` - настройка соединения, ответ `OK`
+`AT+SAPBR=3,1, "Contype","GPRS"` - connection setup, response `OK`
 
-`AT+SAPBR=3,1, "APN","internet.mts.by"` - установка точки доступа сотового оператора, ответ `OK` 
+`AT+SAPBR=3,1, "APN","internet.mts.by"` - setting the access point of the cellular operator, the answer `OK` 
 
-`AT+SAPBR=1,1` - установка GPRS соединения, ответ `OK` 
+`AT+SAPBR=1,1` - setting up GPRS connection, reply `OK` 
 
-`AT+SAPBR=2,1` - запрос состояния подключения, ответ `+SAPBR: 1,1,"100.78.6.XXX"`
+`AT+SAPBR=2,1` - connection status request, response `+SAPBR: 1,1,"100.78.6.XXX"`
 
-`AT+CIPSTART="TCP","m23.cloudmqtt.com",\"10077"` - полключение к броккеру оквет `CONNECT OK`
+`AT+CIPSTART="TCP","m23.cloudmqtt.com",\"10077"` - connection to the broker, the answer `CONNECT OK`
 
-`AT+CIPSEND` - команда начала передачи данных 
+`AT+CIPSEND` - data transfer command
 
-> пакет авторизации `MQTT_CON()`
+> authorization package `MQTT_CON()` 
 
-> пакет публикации `MQTT_PUB()`
+> publishing package `MQTT_PUB()`
 
-> пакет подписки `MQTT_SUB()`
+> subscription package `MQTT_SUB()`
 
-`1A` - байт окончания передачи данных
+`1A` - end byte
 
 ## Состав пакета авторизации (MQTT_CON) 
 
 `10 2D 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 07 43 49 54 52 4F 45 4E 00 08 64 72 69 76 65 32 72 75 00 0C 6D 61 72 74 69 6E 68 6F 6C 32 32 31 `
 
-где все в HEX побайтно
 
-`10` маркер пакета авторизации
+`10` authorization package token
 
-`2D` - общая длинна всего пакета авторизации 2D (HEX)  = 42 (DEC) байта, от следующего байта и до конца
+`2D` - total length of the entire authentication package 2D (HEX)  = 42 (DEC) byte, from the next byte to the end
 
-`00` - постоянно
+`00` - constantly
 
-`06` - длинна типа протоколоа 06 (HEX)  = 6 (DEC) байт
+`06` - protocol length 06 (HEX)  = 6 (DEC) byte
 
-`4D 51 49 73 64 70` - сам тип протокола, он же в ASCII  `MQIsdp`
+`4D 51 49 73 64 70` -the type of the protocol itself, ASCII  `MQIsdp`
 
-`03 C2 00 3C 00` - постоянные
+`03 C2 00 3C 00` - constantly
 
-`07` - длинна имени устройства 07 (HEX)  = 7 (DEC) байт
+`07` - device name length 07 (HEX)  = 7 (DEC)  byte
 
 `43 49 54 52 4F 45 4E` - само имя устройства , оно же в ASCII  `CITROEN`
 
-`00` - постоянно
+`00`  - constantly
 
-`08` - длинна логина 08 (HEX)  = 8 (DEC) байт
+`08` - length of login 08 (HEX)  = 8 (DEC)  byte
 
-`64 72 69 76 65 32 72 75` - сам логин, он же в ASCII  `drive2ru`
+`64 72 69 76 65 32 72 75` - the login, it's in the ASCII  `drive2ru`
 
-`00` - постоянно 
+`00`  - constantly
 
-`0C` - длинна пароля 0C (HEX)  = 12 (DEC) байт
+`0C` - password length 0C (HEX)  = 12 (DEC) байт
 
-`6D 61 72 74 69 6E 68 6F 6C 32 32 31`  - сам пароль, он же в ASCII  `martinhol221`
+`6D 61 72 74 69 6E 68 6F 6C 32 32 31`  - the password itself, it's in the ASCII  `martinhol221`
 
 ## Состав пакета публикации (MQTT_PUB) 
 
