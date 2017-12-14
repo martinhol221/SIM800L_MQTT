@@ -12,11 +12,7 @@ TOPIC `C5/uptime` - Время работы
 
 с интервалом в 60 секунд.
 
-Регистрация у броккера cloudmqtt.com и получение настроек
-
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-3.jpg)
-
-настройки брокера в скетче, смотрите в своем личном кабинете
+Настройки брокера в скетче, смотрите в своем личном кабинете
 
 `const char MQTT_user[10] = "drive2ru";`      User
 
@@ -160,4 +156,8 @@ TOPIC `C5/uptime` - Время работы
 Расход трафика с постоянно открытой сессией, 10.5 кб/час х 24 часа х 30 дней = 7.6 Мб в месяц  
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtttrafic.JPG)
+
+Регистрация у броккера cloudmqtt.com и получение настроек
+
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-3.jpg)
 
