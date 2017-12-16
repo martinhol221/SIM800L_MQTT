@@ -29,6 +29,7 @@ int inDS;
 
 
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);              //скорость порта
   SIM800.begin(9600);              //скорость связи с модемом
   Serial.println("MQTT |12/12/2017"); 
@@ -41,9 +42,22 @@ void loop() {
 /*  --------------------------------------------------- НАЛИЗИРУЕМ БУФЕР ВИРТУАЛЬНОГО ПОРТА МОДЕМА---------------------------------- */ 
   if (SIM800.available()) {                                               // если что-то пришло от SIM800 в SoftwareSerial Ардуино
     while (SIM800.available()) k = SIM800.read(),at += char(k),str += String(k,HEX),delay(1);  // набиваем в переменную at
-   Serial.print("Ответ в ACII     "), Serial.println(at),Serial.print("Ответ в HEX    "), Serial.println(str);      // Возвращаем ответ можема в монитор порта
+   Serial.print("Ответ в ACII     "), Serial.println(at) /*,Serial.print("Ответ в HEX    "), Serial.println(str)*/;      // Возвращаем ответ можема в монитор порта
     response ();                                                         // отправляем ответ для разбора
-    at = "", str = "";   }                                               // очищаем переменные
+    
+         if (str.indexOf("6471776572") > -1 )  { Serial.println ("Команда qwer приянята");   
+
+                             SIM800.println("AT+CIPSEND"), delay (200);  
+                             MQTT_FloatPub ("C5/ds0", TempDS[0],2);
+                             MQTT_FloatPub ("C5/ds1", TempDS[1],2);
+                             MQTT_FloatPub ("C5/vbat", Vbat,2);
+                             MQTT_FloatPub ("C5/uptime", millis()/1000,0); 
+                             SIM800.write(0x1A); 
+              
+   }else if (str.indexOf("6474797569") > -1 )  { Serial.println ("Команда tyui принята "), digitalWrite(LED_BUILTIN, HIGH);;         
+   }else if (str.indexOf("6461736466") > -1 )    Serial.println ("Команда asdf принята "), digitalWrite(LED_BUILTIN, LOW);;       
+     
+     at = "", str = "";   }                                               // очищаем переменные
    
 if (millis()> Time1 + 10000) Time1 = millis(), detection();               // выполняем функцию detection () каждые 10 сек 
 
@@ -89,12 +103,11 @@ void response (){
      } else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )  {SIM800.println("AT+SAPBR=1,1"),delay (1000); // устанавливаем соеденение   
      } else if (at.indexOf("AT+SAPBR=1,1\r\r\nOK") > -1 )  {SIM800.println("AT+SAPBR=2,1"),        delay (1000);    // проверяем статус соединения  
     /*  ------------------------------------------------ конектимся к MQTT брокеру -------------------------------------------------------------------- */       
-                     
      } else if (at.indexOf("+SAPBR: 1,1") > -1 )    {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);
     /*  ------------------------------------------------ авторизуемся  у MQTT брокера ----------------------------------------------------------------- */  
      } else if (at.indexOf("CONNECT OK\r\n") > -1 )    MQTT_CONNECT ();   // пакет авторизации, публикации и пдписки у брокера
 
-     if (str.indexOf("636f6d616e643132337374617274") > -1 ) Serial.println ("Команда принята старт ");  // временный костыль  comand123start
+   //  if (str.indexOf("636f6d616e643132337374617274") > -1 ) Serial.println ("Команда принята старт ");  // временный костыль  comand123start
 
 } 
 
