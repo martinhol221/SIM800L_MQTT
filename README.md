@@ -37,7 +37,7 @@ TOPIC `C5/uptime` - Время работы
 
 `String PORT = "10077";`                  
 
-## Connection to MCTT Broker
+## Установка соединения с MQTT брокером
 
 `AT+SAPBR=3,1, "Contype","GPRS"` - настройка параметров соединения, ответ `OK`
 
