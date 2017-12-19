@@ -191,3 +191,6 @@ TOPIC `C5/uptime` - Время работы
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-3.jpg)
 
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-7.jpg)
+
+
