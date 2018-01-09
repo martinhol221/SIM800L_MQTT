@@ -186,7 +186,7 @@ TOPIC `C5/uptime` - Время работы
 
 Регистрация у броккера cloudmqtt.com и получение настроек
 
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/MqttDashSetupserver.jpg)
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/mqtt-9.jpg)
 
 
 
