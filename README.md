@@ -79,6 +79,8 @@ Port
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-9.jpg)
 
+**Настройка приложения**
+
 Открыть в приложении ***Импорт/экспорт*** (1)
 
 Нажать ***Подписаться и ждать метрики*** (2) 
@@ -87,6 +89,7 @@ Port
 
 В вебсокете https://api.cloudmqtt.com/console/________/websocket  заполнить  и отправить настройки в телефон
 
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/setupMqtt2.JPG)
 
 ***Topic***  metrics/exchange
 
