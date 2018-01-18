@@ -79,28 +79,6 @@ Port
 
 ![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-9.jpg)
 
-Температура, тип **Текст**
-
-![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-10.jpg)
-
-Напряжение, тип **Диапазон/прогрес** Время работы, тип **Текст**
-
-![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-11.jpg)
-
-Управление кнопками, тип **Переключатель/кнопка**
-
-![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-12.jpg)
-
-Кнопка "Обновить", тип **Переключатель/кнопка**
-
-![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-13.jpg)
-
-Таймер, тип **Диапазон/прогрес**, Статус, тип **Текст**
-
-![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-14.jpg)
-
-В приложении открыть вкладку ИМПРТ/ЭКСПОРТ
-![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/other/7caa575s-1920.jpg)
 
 нажать ПОДПИСАТЬСЯ И ЖДАТЬ
 
