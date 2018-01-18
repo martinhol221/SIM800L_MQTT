@@ -77,9 +77,11 @@ Port
 
 перенести значение этих параметров в  MQTT Dash, [Скачать](https://play.google.com/store/apps/details?id=net.routix.mqttdash&hl=ru), можно использовать любой другой MQTT клиент
 
+**Настройка приложения к серверу**
+
 ![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-9.jpg)
 
-**Настройка приложения**
+**Загрузка настроек интерфейса**
 
 Открыть в приложении ***Импорт/экспорт*** (1)
 
