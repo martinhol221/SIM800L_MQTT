@@ -1,5 +1,4 @@
 // ТЕСТ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 unsigned long Time1,tms,tms2,tms3,tms4, StarterTimeON = 0;
 int steps = 0;
 int StTime = 3000;
@@ -10,6 +9,9 @@ float m = 69.91;                   // делитель для перевода �
 #define BAT_Pin      A0             // на батарею, через делитель напряжения 39кОм / 11 кОм
 #define Feedback_Pin A1             // на провод от замка зажигания
 #define STOP_Pin     A2             // на концевик педали тормоза для отключения режима прогрева
+#define FIRST_P_Pin  8              // на реле первого положения замка зажигания
+#define SECOND_P     9              // на реле зажигания, через транзистор с 9-го пина ардуино
+#define STARTER_Pin  12             // на реле стартера, через транзистор с 12-го пина ардуино
 int Timer = 0;
 int Attempts = 2;                   // число задаваемых попыток запуска
 float TempDS = 50; 
@@ -18,7 +20,9 @@ float TempDS = 50;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(FIRST_P_Pin, OUTPUT);    // указываем пин на выход для доп реле первого положения замка зажигания
+  pinMode(SECOND_P,    OUTPUT);    // указываем пин на выход доп реле зажигания
+  pinMode(STARTER_Pin, OUTPUT);    // указываем пин на выход доп реле стартера
 
   SETUPSTART ();
   delay(20);
@@ -37,9 +41,9 @@ else if (steps == 9 && millis()> tms2 + 10000)        TIMERSTEP(),      tms2 = m
 
             }
 
-void ACC (bool st)     {digitalWrite(LED_BUILTIN, st ? HIGH:LOW), Serial.print("Потребители "), Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
-void ING (bool st)     {digitalWrite(LED_BUILTIN, st ? HIGH:LOW), Serial.print("Зажигание "),   Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
-void STARTER (bool st) {digitalWrite(LED_BUILTIN, st ? HIGH:LOW), Serial.print("Стартер "),     Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
+void ACC (bool st)     {digitalWrite(FIRST_P_Pin, st ? HIGH:LOW), Serial.print("Потребители "), Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
+void ING (bool st)     {digitalWrite(SECOND_P, st ? HIGH:LOW), Serial.print("Зажигание "),   Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
+void STARTER (bool st) {digitalWrite(STARTER_Pin, st ? HIGH:LOW), Serial.print("Стартер "),     Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
 void ROTATION ()       {if(!NEUTRAL())  {STARTER(1), delay (StTime + 500 * count), STARTER(0), count++;}    else {STOP(), steps=0;} }
 void DETECT()          {if(VoltRead()>Vstart) count=Attempts, steps=9, Timer=map(TempDS,30,-25,30,150), Timer=constrain(Timer,30,180);}
 void STOP()            {Serial.println("Стоп"), ING(0), ACC(0);  if (count > Attempts) {Timer=0, steps = 0;}}
