@@ -1,9 +1,10 @@
-// ТЕСТ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//голый запуск для теста
+
 unsigned long Time1,tms,tms2,tms3,tms4, StarterTimeON = 0;
 int steps = 0;
 int StTime = 3000;
-int z,count = 0 ; 
-float Vstart = 1.50;              // поорог распознавания момента запуска по напряжению
+int z,zh,count = 0 ; 
+float Vstart = 16.50;              // поорог распознавания момента запуска по напряжению
 float Vbat, VbatStart, V_min ;     // переменная хранящая напряжение бортовой сети
 float m = 69.91;                   // делитель для перевода АЦП в вольты для резистров 39/11kOm
 #define BAT_Pin      A0             // на батарею, через делитель напряжения 39кОм / 11 кОм
@@ -14,7 +15,7 @@ float m = 69.91;                   // делитель для перевода �
 #define STARTER_Pin  12             // на реле стартера, через транзистор с 12-го пина ардуино
 int Timer = 0;
 int Attempts = 2;                   // число задаваемых попыток запуска
-float TempDS = 50; 
+float TempDS = -12; 
 
 
 
@@ -37,18 +38,18 @@ else if (steps == 5 && millis()> tms + 10000)  steps = 6, CANDLES (),    tms = m
 else if (steps == 6 && millis()> tms + 2000)   steps = 7, ROTATION(),    tms = millis();  // шаг 6 крутим стартером
 else if (steps == 7 && millis()> tms + 6000)   steps = 8, DETECT(),      tms = millis();  // шаг 7 детектируем 
 else if (steps == 8 && millis()> tms + 2000)   steps = 3, STOP(),        tms = millis();  // шаг 8 отключаем все                   
-else if (steps == 9 && millis()> tms2 + 10000)        TIMERSTEP(),      tms2 = millis();  // таймер     
+else if (steps == 9 && millis()> tms2 + 10000)        TIMERSTEP(),      tms2 = millis();  // шаг 9 таймер прогрева   
 
             }
 
 void ACC (bool st)     {digitalWrite(FIRST_P_Pin, st ? HIGH:LOW), Serial.print("Потребители "), Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
-void ING (bool st)     {digitalWrite(SECOND_P, st ? HIGH:LOW), Serial.print("Зажигание "),   Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
+void ING (bool st)     {digitalWrite(SECOND_P, st ? HIGH:LOW),    Serial.print("Зажигание "),   Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
 void STARTER (bool st) {digitalWrite(STARTER_Pin, st ? HIGH:LOW), Serial.print("Стартер "),     Serial.println(st ? "ВКЛ.":"ОТКЛ.");} 
 void ROTATION ()       {if(!NEUTRAL())  {STARTER(1), delay (StTime + 500 * count), STARTER(0), count++;}    else {STOP(), steps=0;} }
-void DETECT()          {if(VoltRead()>Vstart) count=Attempts, steps=9, Timer=map(TempDS,30,-25,30,150), Timer=constrain(Timer,30,180);}
-void STOP()            {Serial.println("Стоп"), ING(0), ACC(0);  if (count > Attempts) {Timer=0, steps = 0;}}
+void DETECT()          {if(VoltRead()>Vstart) steps=9, Timer=map(TempDS,30,-25,30,150), Timer=constrain(Timer,30,180);}
+void STOP()            {Serial.println("Стоп"), ING(0), ACC(0), zh = z; ;  if (count > Attempts) {Timer=0, steps = 0;}}
 void TIMERSTEP ()      {if(Timer>0) {Timer--, Serial.print("Таймер "), Serial.println(Timer);} else {STOP(), steps = 0;}} 
-void CANDLES ()        {Serial.print("Свечи "), Serial.println(z); if (z>0){z--, steps=3; }}   
+void CANDLES ()        {Serial.print("Свечи "), Serial.println(zh); if (zh>0){zh--, steps=3; }}   
 bool NEUTRAL ()        { return(digitalRead(STOP_Pin)); }
 void SETUPSTART ()     {Serial.println("Предпусковая настройка");
      count = 0;
@@ -58,6 +59,7 @@ void SETUPSTART ()     {Serial.println("Предпусковая настрой�
      StTime  = constrain(StTime, 1000, 6000);            // ограничиваем диапазон работы стартера от 1 до 6 сек
      z = map(TempDS, 0, -25, 0, 5);                      // задаем количество раз прогрева свечей пропорциолально температуре
      z = constrain(z, 0, 5);                             // огрничиваем попытки от 0 до 5 попыток
+     zh = z;
      V_min = 14;                                         // переменная хранящая минимальные напряжения в ммент старта
      steps = 2;} 
 
