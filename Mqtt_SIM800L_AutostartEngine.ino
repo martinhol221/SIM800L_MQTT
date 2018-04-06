@@ -241,14 +241,14 @@ void detection(){                                                 // услов�
     interval--;
     if (interval <1) { interval = 6; 
         if (broker == true) { SIM800.println("AT+CIPSEND"), delay (200);  
-                              MQTT_FloatPub ("C5/ds0", TempDS[0],2);
-                              MQTT_FloatPub ("C5/ds1", TempDS[1],2);
-                              MQTT_FloatPub ("C5/vbat", Vbat,2);
-                              MQTT_FloatPub ("C5/timer", Timer,0);
-                              MQTT_PUB ("C5/security", Security ? "lock1" : "lock0");
-                              MQTT_PUB ("C5/engine", heating ? "start" : "stop");
-                              MQTT_FloatPub ("C5/engine", heating,0);
-                              MQTT_FloatPub ("C5/uptime", millis()/60000,0); 
+                              MQTT_FloatPub ("C5/ds0",      TempDS[0],2);
+                              MQTT_FloatPub ("C5/ds1",      TempDS[1],2);
+                              MQTT_FloatPub ("C5/vbat",     Vbat,2);
+                              MQTT_FloatPub ("C5/timer",    Timer,0);
+                              MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
+                              MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
+                              MQTT_FloatPub ("C5/engine",   heating,0);
+                              MQTT_FloatPub ("C5/uptime",   millis()/60000,0); 
                               SIM800.write(0x1A); 
                               
     } else  SIM800.println ("AT+SAPBR=3,1, \"Contype\",\"GPRS\""), delay (200);    // подключаемся к GPRS 
@@ -329,13 +329,13 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
    } else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart(2);    // команда запуска прогрева
    } else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Команда обнвления");
                                                           SIM800.println("AT+CIPSEND"), delay (200);  
-                                                          MQTT_FloatPub ("C5/ds0", TempDS[0],2);
-                                                          MQTT_FloatPub ("C5/ds1", TempDS[1],2);
-                                                          MQTT_FloatPub ("C5/vbat", Vbat,2);
-                                                          MQTT_FloatPub ("C5/timer", Timer,0);
-                                                          MQTT_PUB ("C5/security", Security ? "lock1" : "lock0");
-                                                          MQTT_PUB ("C5/engine", heating ? "start" : "stop");
-                                                          MQTT_FloatPub ("C5/uptime", millis()/60000,0); 
+                                                          MQTT_FloatPub ("C5/ds0",      TempDS[0],2);
+                                                          MQTT_FloatPub ("C5/ds1",      TempDS[1],2);
+                                                          MQTT_FloatPub ("C5/vbat",     Vbat,2);
+                                                          MQTT_FloatPub ("C5/timer",    Timer,0);
+                                                          MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
+                                                          MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
+                                                          MQTT_FloatPub ("C5/uptime",   millis()/60000,0); 
                                                           SIM800.write(0x1A); 
                                                           interval = 6; // швырнуть данные на сервер и ждать 60 сек
             
