@@ -145,7 +145,6 @@ while (z > 0) /* Voice(3),*/ digitalWrite(SECOND_P, LOW), delay(2000), digitalWr
 //float V_stON = VoltRead();                              // временно так
  while ((millis() < (StarterTimeON + StTime)) /* && ((VoltRead() + V_stOFF) < V_stON)*/)VoltRead(), delay (50);
  digitalWrite(STARTER_Pin, LOW), delay (1000);
- MQTT_PUB ("C5/status", "Стартер Откл");
  //digitalWrite(FIRST_P_Pin, HIGH),           // включаем реле первого положения замка зажигания   
  Serial.println("Стартер выключил, ожидаем 6 сек.");
  
@@ -165,11 +164,10 @@ while (z > 0) /* Voice(3),*/ digitalWrite(SECOND_P, LOW), delay(2000), digitalWr
   StTime = StTime + 200;                             // увеличиваем время следующего старта на 0.2 сек.
   heatingstop();   }                                 // уменьшаем на еденицу число оставшихся потыток запуска
                   
-Serial.println ("Выход из запуска");
- if (count != 1) SMS_send = true;                   // отправляем смс СРАЗУ только в случае незапуска c первой попытки
- if (heating == false){ Timer = 0/*,  Voice(10)*/;                  // обнуляем таймер если запуска не произошло
-           } else digitalWrite(Unlock_Pin, HIGH);  // включаем подогрев седений если все ОК
 
+// if (count != 1) SMS_send = true;                  // отправляем смс СРАЗУ только в случае незапуска c первой попытки
+if (heating == false) Timer = 0;                     // обнуляем таймер если запуска не произошло
+Serial.println ("Выход из запуска"), interval = 1;
 
            
 //delay(3000), SIM800.println("ATH0");                            // вешаем трубку (для SIM800L) 
