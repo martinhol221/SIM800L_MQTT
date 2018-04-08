@@ -162,7 +162,7 @@ if (heating == true && Timer <1)    heatingstop();      // остановка п
                               MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
                               MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
                               MQTT_FloatPub ("C5/engine",   heating,0);
-                              MQTT_FloatPub ("C5/uptime",   millis()/60000,0); 
+                              MQTT_FloatPub ("C5/uptime",   millis()/3600000,0); 
                               SIM800.write(0x1A); 
                               
     } else  SIM800.println ("AT+SAPBR=3,1, \"Contype\",\"GPRS\""), delay (200);    // подключаемся к GPRS 
@@ -249,7 +249,7 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
                                                           MQTT_FloatPub ("C5/timer",    Timer,0);
                                                           MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
                                                           MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
-                                                          MQTT_FloatPub ("C5/uptime",   millis()/60000,0); 
+                                                          MQTT_FloatPub ("C5/uptime",   millis()/3600000,0); 
                                                           SIM800.write(0x1A); 
                                                           interval = 6; // швырнуть данные на сервер и ждать 60 сек
             
