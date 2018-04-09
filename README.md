@@ -45,7 +45,7 @@
 
 
 **Главное окно программы MQTT Dash** 
-![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-15.jpg)
+![](https://github.com/martinhol221/SIM800L_MQTT/raw/master/other/mqtt-18.jpg)
 
 
 ### Регистрация на https://www.cloudmqtt.com/
