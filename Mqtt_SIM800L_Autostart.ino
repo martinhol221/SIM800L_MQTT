@@ -225,7 +225,7 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
    while (SIM800.available()) k = SIM800.read(),at += char(k),delay(1);           
    Serial.println(at);  
  
-      if (at.indexOf("+CLIP: \""+call_phone+"\",") > -1) == -1 ) {delay(200), SIM800.println("ATA"), ring = true;
+      if (at.indexOf("+CLIP: \""+call_phone+"\",") > -1) {delay(200), SIM800.println("ATA"), ring = true;
       } else if (at.indexOf("+DTMF: ")  > -1)        {String key = at.substring(at.indexOf("")+9, at.indexOf("")+10);
                                                      pin = pin + key;
                                                      if (pin.indexOf("*") > -1 ) pin= ""; 
