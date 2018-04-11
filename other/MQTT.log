@@ -1,80 +1,63 @@
-MQTT | TEL:+375290000000 | 12/12/2017
-<0>
-AT+CFUN=1,1
-
-OK
 
 
-RDY
-
-+CFUN: 1
 
 
-+CPIN: READY
+
+****** Лог сервера
 
 
-Call Ready
-
-
-SMS Ready
-
-AT+CMGDA="DEL ALL";+CLIP=1;+DDET=1
-
-Vbat=7.40| int: 2| Timer:0 | Temp0= 22.06 | Temp1= 21.94 
-
-OK
-
-Vbat=7.37| int: 1| Timer:0 | Temp0= 22.25 | Temp1= 22.12 
-AT+SAPBR=3,1, "Contype","GPRS"
-
-OK
-
-AT+SAPBR=3,1, "APN","internet.mts.by"
-
-OK
-
-AT+SAPBR=1,1
-
-OK
-
-AT+SAPBR=2,1
-
-+SAPBR: 1,1,"100.78.6.XXX"
-
-OK
-
-AT+CIPSTART="TCP","m23.cloudmqtt.com","10077"
-
-OK
-
-
-CONNECT OK
-
-AT+CIPSEND
-
-> -<0>MQIsdpÂ<0><<0>CITROEN<0qXXXXXXy<0>lXXXXXXXXXs0<0>	C5/statusÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¾‚<0><0>	C5/comand<0>
-
-SEND OK
-
- <0><0>
-<0><0>
-Vbat=7.40| int: 6| Timer:0 | Temp0= 22.31 | Temp1= 22.19 
-Vbat=7.38| int: 5| Timer:0 | Temp0= 22.31 | Temp1= 22.19 
-Vbat=7.40| int: 4| Timer:0 | Temp0= 22.37 | Temp1= 22.25 
-Vbat=7.38| int: 3| Timer:0 | Temp0= 22.37 | Temp1= 22.25 
-Vbat=7.38| int: 2| Timer:0 | Temp0= 22.44 | Temp1= 22.31 
-Vbat=7.40| int: 1| Timer:0 | Temp0= 22.44 | Temp1= 22.31 
-AT+CIPSEND
-
-> 0
-<0>C5/ds022.440
-<0>C5/ds122.310
-<0>C5/vbat7.400
-<0>	C5/uptime80
-
-SEND OK
-
-Vbat=7.38| int: 6| Timer:0 | Temp0= 22.50 | Temp1= 22.37 
-Vbat=7.40| int: 5| Timer:0 | Temp0= 22.50 | Temp1= 22.37 
-Vbat=7.38| int: 4| Timer:0 | Temp0= 22.56 | Temp1= 22.44 
-
+2018-04-10 14:57:18: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 15:27:19: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 15:57:20: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 16:27:21: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 16:57:22: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 17:27:23: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 17:57:24: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 18:27:25: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 18:57:26: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 19:27:27: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 19:57:28: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 20:27:29: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 20:57:30: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 21:27:31: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 21:57:32: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 22:27:33: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 22:57:34: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 23:27:35: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-10 23:57:36: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 00:27:37: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 00:57:38: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 01:27:39: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 01:57:40: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 02:27:41: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 02:57:42: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 03:27:43: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 03:57:44: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 04:27:45: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 04:57:46: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 05:02:07: New connection from 46.216.153.225 on port 10077.
+2018-04-11 05:02:07: New client connected from 46.216.153.225 as cubot-464665746 (c1, k30, u'00000000').
+2018-04-11 05:03:58: Client cubot-464665746 has exceeded timeout, disconnecting.
+2018-04-11 05:03:58: Socket error on client cubot-464665746, disconnecting.
+2018-04-11 05:27:47: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 05:36:23: New connection from 134.17.5.200 on port 10077.
+2018-04-11 05:36:23: New client connected from 134.17.5.200 as cubot-464665746 (c1, k30, u'0000000').
+2018-04-11 05:57:48: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 06:27:49: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 06:57:50: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 07:21:21: Client cubot-464665746 has exceeded timeout, disconnecting.
+2018-04-11 07:21:21: Socket error on client cubot-464665746, disconnecting.
+2018-04-11 07:27:51: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 07:57:52: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 08:27:53: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 08:57:54: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 09:27:55: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 09:57:56: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 10:27:57: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 10:57:58: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 11:27:59: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 11:58:00: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 12:28:01: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 12:58:02: Saving in-memory database to /var/lib/mosquitto/10077/db.
+2018-04-11 13:03:55: New client connected from 134.17.5.200 as ws0.21964889197659065 (c1, k60, u'000000').
+2018-04-11 13:03:58: Socket error on client ws0.21964889197659065, disconnecting.
