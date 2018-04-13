@@ -273,6 +273,7 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
 // функция дергания реле блокировки/разблокировки дверей с паузой "удержания кнопки" в 0,5 сек.
 void blocking (bool st) {digitalWrite(st ? Lock_Pin : Unlock_Pin, HIGH), delay(500), digitalWrite(st ? Lock_Pin : Unlock_Pin, LOW), Security = st, Serial.println(st ? "На охране":"Открыто");}
 
+// функция удержания реле блокировки/разблокировки на выходе out4
 //void blocking (bool st) {digitalWrite(Lock_Pin, st ? HIGH : LOW), Security = st, Serial.println(st ? "На охране":"Открыто");}
 
 
