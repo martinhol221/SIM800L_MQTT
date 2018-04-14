@@ -234,7 +234,7 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
       } else if (at.indexOf("+CLIP: \""+SMS_phone+"\",") > -1) { delay(50), SIM800.println("ATH0"), enginestart();    // заводим без снятия трубки                                                                               
  /*  -------------------------------------- проверяем соеденеиние с ИНТЕРНЕТ, конектимся к серверу------------------------------------------------------- */
       } else if  (at.indexOf("AT+SAPBR=3,1, \"Contype\",\"GPRS\"\r\r\nOK") > -1 ) {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""), delay (500); 
-      } else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), delay (1000); // устанавливаем соеденение   
+      } else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {delay (500),SIM800.println("AT+SAPBR=1,1"), delay (1800); // устанавливаем соеденение   
       } else if (at.indexOf("AT+SAPBR=1,1/*\r\r\nOK*/") > -1 )                        {SIM800.println("AT+SAPBR=2,1"), delay (1000); // проверяем статус соединения  
       } else if (at.indexOf("+SAPBR: 1,1") > -1 )    {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);
       } else if (at.indexOf("+CME ERROR:") > -1 )    {broker = false, delay (50), SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 6 ;
