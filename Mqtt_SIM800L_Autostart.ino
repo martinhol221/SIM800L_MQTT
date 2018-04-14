@@ -73,7 +73,7 @@ void setup() {
 void loop() {
 
 if (SIM800.available())  resp_modem();                                    // если что-то пришло от SIM800 в Ардуино отправляем для разбора
-//if (Serial.available())  resp_serial();                                 // если что-то пришло от Ардуино отправляем в SIM800
+if (Serial.available())  resp_serial();                                 // если что-то пришло от Ардуино отправляем в SIM800
 if (millis()> Time2 + 60000) {Time2 = millis(); 
     if (Timer > 0 ) Timer--, Serial.print("Таймер прогрева:"), Serial.println (Timer);}
                                                
