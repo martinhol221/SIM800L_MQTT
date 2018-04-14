@@ -173,13 +173,13 @@ if (heating == true && Timer <1)    heatingstop();      // остановка п
 
 
 
-/*
+
 void resp_serial (){     // ---------------- ТРАНСЛИРУЕМ КОМАНДЫ из ПОРТА В МОДЕМ ----------------------------------
      String at = "";   
  //    while (Serial.available()) at = Serial.readString();
   int k = 0;
    while (Serial.available()) k = Serial.read(),at += char(k),delay(1);
-     SIM800.println(at), at = "";   }  */
+     SIM800.println(at), at = "";   } 
 
 
 
