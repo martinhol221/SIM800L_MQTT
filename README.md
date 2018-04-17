@@ -1,6 +1,6 @@
 # Удаленное управление запуском двигателя автомобиля через интернет с использованием протокола MQTT.
 
-[Видео на youtube](https://www.youtube.com/watch?v=HzQ7oy439Qk)
+https://www.youtube.com/watch?v=HzQ7oy439Qk
 
 [Анатомия автозапуска 5.2](https://www.drive2.ru/c/499270089304965988/)
 
