@@ -51,8 +51,8 @@ void setup() {
   pinMode(Lock_Pin,    OUTPUT);             // указываем пин на выход для реле на кнопку "заблокировать дверь"
   pinMode(Unlock_Pin,  OUTPUT);             // указываем пин на выход для реле на кнопку "раззаблокировать дверь"
   pinMode(LED_Pin,     OUTPUT);             // указываем пин на выход (светодиод)
- // pinMode(3, INPUT_PULLUP);                 // указываем пин на вход для внешних прерываний всевозможных датчиков
- // pinMode(2, INPUT_PULLUP);                 // указываем пин на вход для внешних прерываний всевозможных датчиков
+  pinMode(3, INPUT_PULLUP);                 // указываем пин на вход для внешних прерываний всевозможных датчиков
+  pinMode(2, INPUT_PULLUP);                 // указываем пин на вход для внешних прерываний всевозможных датчиков
   delay(100); 
   Serial.begin(9600);                       //скорость порта
 //  Serial.setTimeout(50);
@@ -60,7 +60,7 @@ void setup() {
   SIM800.begin(9600);                       //скорость связи с модемом
  // SIM800.setTimeout(500);                 // тайм аут ожидания ответа
   
-  Serial.println("MQTT |14/04/2018"); 
+  Serial.println("MQTT |24/05/2018"); 
   delay (1000);
   SIM800_reset();
  
@@ -81,12 +81,7 @@ if (millis()> Time1 + 10000) Time1 = millis(), detection();               // в�
 if (heating == true && digitalRead(STOP_Pin)==1) heatingstop();           // если нажали на педаль тормоза в режиме прогрева
             }
 
-/*  --------------------------------------------------- Перезагрузка МОДЕМА SIM800L ------------------------------------------------ */ 
-void SIM800_reset() {  
-    SIM800.println("AT+CFUN=1,1");}   // програмная перезагрузка модема 
 
-void callback(){                                                  // обратный звонок при появлении напряжения на входе IN1
-    SIM800.println("ATD"+call_phone+";"),    delay(5000);} 
 
 void enginestart() {                                              // программа запуска двигателя
  /*  ----------------------------------------- ПРЕДНАСТРОЙКА ПЕРЕД ЗАПУСКОМ ---------------------------------------------------------*/
@@ -182,11 +177,7 @@ void resp_serial (){     // ---------------- ТРАНСЛИРУЕМ КОМАНД
      SIM800.println(at), at = "";   }   
 
 
-
-
-void  MQTT_FloatPub (const char topic[15], float val, int x) { // топик, переменная в float, количество знаков после точки
-           char st[10];
-           dtostrf(val,0, x, st), MQTT_PUB (topic, st);      }
+void  MQTT_FloatPub (const char topic[15], float val, int x) {char st[10]; dtostrf(val,0, x, st), MQTT_PUB (topic, st);}
 
 void MQTT_CONNECT () {
   SIM800.println("AT+CIPSEND"), delay (100);
@@ -237,8 +228,8 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
       } else if (at.indexOf("+CME ERROR:") > -1 )    {broker = false, delay (50), SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 6 ;
 
  
-   } else if (at.indexOf("C5/comandlock1",4) > -1 )      {blocking(1);        // команда постановки на охрану       
-   } else if (at.indexOf("C5/comandlock0",4) > -1 )      {blocking(0);        // команда снятия с хораны
+   } else if (at.indexOf("C5/comandlock1",4) > -1 )      {blocking(1), attachInterrupt(1, callback, FALLING);     // команда постановки на охрану и включения прерывания по датчику вибрации     
+   } else if (at.indexOf("C5/comandlock0",4) > -1 )      {blocking(0), detachInterrupt(1);                        // команда снятия с хораны и отключения прерывания на датчик вибрации 
    } else if (at.indexOf("C5/settimer",4) > -1 )         {Timer = at.substring(at.indexOf("")+15, at.indexOf("")+18).toInt();
    } else if (at.indexOf("C5/comandstop",4) > -1 )       {heatingstop();     // команда остановки прогрева
    } else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart();    // команда запуска прогрева
@@ -246,8 +237,8 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
                                                           SIM800.println("AT+CIPSEND"), delay (200);  
                                                           MQTT_FloatPub ("C5/ds0",      TempDS[0],2);
                                                           MQTT_FloatPub ("C5/ds1",      TempDS[1],2);
-                                                    //      MQTT_FloatPub ("C5/ds2",      TempDS[2],2);
-                                                    //      MQTT_FloatPub ("C5/ds3",      TempDS[3],2);
+                                                  //      MQTT_FloatPub ("C5/ds2",      TempDS[2],2);
+                                                  //      MQTT_FloatPub ("C5/ds3",      TempDS[3],2);
                                                           MQTT_FloatPub ("C5/vbat",     Vbat,2);
                                                           MQTT_FloatPub ("C5/timer",    Timer,0);
                                                           MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
@@ -267,8 +258,11 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
                                     }else Voice(8); } */    
                                
  } 
+
+//void blocking (bool st) {digitalWrite(Lock_Pin, st ? HIGH : LOW), Security = st, Serial.println(st ? "На охране":"Открыто");} // функция удержания реле блокировки/разблокировки на выходе out4
+ 
 // функция дергания реле блокировки/разблокировки дверей с паузой "удержания кнопки" в 0,5 сек.
 void blocking (bool st) {digitalWrite(st ? Lock_Pin : Unlock_Pin, HIGH), delay(500), digitalWrite(st ? Lock_Pin : Unlock_Pin, LOW), Security = st, Serial.println(st ? "На охране":"Открыто");}
+void SIM800_reset() {SIM800.println("AT+CFUN=1,1");}                        // перезагрузка модема 
+void callback()     {SIM800.println("ATD"+call_phone+";"),    delay(3000);} // обратный звонок при появлении напряжения на входе IN1
 
-// функция удержания реле блокировки/разблокировки на выходе out4
-//void blocking (bool st) {digitalWrite(Lock_Pin, st ? HIGH : LOW), Security = st, Serial.println(st ? "На охране":"Открыто");}
