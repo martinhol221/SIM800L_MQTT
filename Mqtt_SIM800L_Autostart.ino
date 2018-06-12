@@ -23,8 +23,10 @@ const char MQTT_CID[15] = "CITROEN";        // уникальное имя ус�
 String MQTT_SERVER = "m54.cloudmqtt.com";   // api.cloudmqtt.com > Details > Server  сервер MQTT брокера
 String PORT = "10077";                      // api.cloudmqtt.com > Details > Port    порт MQTT брокера
 /*  ----------------------------------------- ИНДИВИДУАЛЬНЫЕ НАСТРОЙКИ !!!---------------------------------------------------------   */
-String call_phone= "+375000000000";         // телефон входящего вызова  
-String SMS_phone = "+375000000000";         // телефон куда отправляем СМС 
+String call_phone=  "+375000000000";        // телефон входящего вызова  для управления DTMF
+String call_phone2= "+375000000001";        // телефон для автосброса 
+String call_phone3= "+375000000002";        // телефон для автосброса 
+String call_phone4= "+375000000003";        // телефон для автосброса 
 String APN = "internet.mts.by";             // тчка доступа выхода в интернет вашего сотового оператора
 String USER = "mts";                        // имя выхода в интернет вашего сотового оператора
 String PASS = "mts";                        // пароль доступа выхода в интернет вашего сотового оператора
@@ -60,7 +62,7 @@ void setup() {
   SIM800.begin(9600);                       //скорость связи с модемом
  // SIM800.setTimeout(500);                 // тайм аут ожидания ответа
   
-  Serial.println("MQTT |24/05/2018"); 
+  Serial.println("MQTT |12/06/2018"); 
   delay (1000);
   SIM800_reset();
  
@@ -216,6 +218,11 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
    Serial.println(at);  
  
       if (at.indexOf("+CLIP: \""+call_phone+"\",") > -1) {delay(200), SIM800.println("ATA"), ring = true;
+     
+      } else if(at.indexOf("+CLIP: \""+call_phone2+"\",") > -1) {delay(200), SIM800.println("ATH0"), enginestart();
+      } else if(at.indexOf("+CLIP: \""+call_phone3+"\",") > -1) {delay(200), SIM800.println("ATH0"), enginestart();
+      } else if(at.indexOf("+CLIP: \""+call_phone4+"\",") > -1) {delay(200), SIM800.println("ATH0"), enginestart();
+     
       } else if (at.indexOf("+DTMF: ")  > -1)        {String key = at.substring(at.indexOf("")+9, at.indexOf("")+10);
                                                      pin = pin + key;
                                                      if (pin.indexOf("*") > -1 ) pin= ""; 
@@ -265,4 +272,3 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
 void blocking (bool st) {digitalWrite(st ? Lock_Pin : Unlock_Pin, HIGH), delay(500), digitalWrite(st ? Lock_Pin : Unlock_Pin, LOW), Security = st, Serial.println(st ? "На охране":"Открыто");}
 void SIM800_reset() {SIM800.println("AT+CFUN=1,1");}                        // перезагрузка модема 
 void callback()     {SIM800.println("ATD"+call_phone+";"),    delay(3000);} // обратный звонок при появлении напряжения на входе IN1
-
