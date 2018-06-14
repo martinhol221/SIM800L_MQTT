@@ -219,7 +219,7 @@ void resp_modem (){     //------------------ АНЛИЗИРУЕМ БУФЕР В�
  
       if (at.indexOf("+CLIP: \""+call_phone+"\",") > -1) {delay(200), SIM800.println("ATA"), ring = true;
      
-    //  } else if(at.indexOf("+CLIP: \""+call_phone2+"\",") > -1) {delay(50), SIM800.println("ATH0"), enginestart();
+    //  } else if(at.indexOf("+CLIP: \""+call_phone2+"\",") > -1) {delay(50), SIM800.println("ATH0), enginestart();
     //  } else if(at.indexOf("+CLIP: \""+call_phone3+"\",") > -1) {delay(50), SIM800.println("ATH0"), enginestart();
     //  } else if(at.indexOf("+CLIP: \""+call_phone4+"\",") > -1) {delay(50), SIM800.println("ATH0"), enginestart();
      
