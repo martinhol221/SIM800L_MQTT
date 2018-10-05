@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
-SoftwareSerial SIM800(7, 6);        // для новых плат начиная с версии RX,TX
-#include <DallasTemperature.h>      // подключаем библиотеку чтения датчиков температуры
-OneWire oneWire(4);                 // и настраиваем  пин 4 как шину подключения датчиков DS18B20
-DallasTemperature sensors(&oneWire);
-/*  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ АРДУИНО НА РАЗЛИЧНЫЕ НАПРАВЛЕНИЯ------------------------------   */
+#include <DallasTemperature.h>      // https://github.com/milesburton/Arduino-Temperature-Control-Library
+
+/*  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок до 1.7.6 ------------------------------   */
+SoftwareSerial SIM800(7, 6);                // для новых плат начиная с версии RX,TX
+#define ONE_WIRE_BUS 4                      // https://github.com/PaulStoffregen/OneWire
 #define FIRST_P_Pin  8                      // на реле первого положения замка зажигания с 8-го пина ардуино
 #define SECOND_P     9                      // на реле зажигания, через транзистор с 9-го пина ардуино
 #define STARTER_Pin  12                     // на реле стартера, через транзистор с 12-го пина ардуино
@@ -14,7 +14,25 @@ DallasTemperature sensors(&oneWire);
 #define Feedback_Pin A1                     // на провод от замка зажигания для обратной связи по проводу ON
 #define STOP_Pin     A2                     // на концевик педали тормоза для отключения режима прогрева
 #define PSO_Pin      A3                     // на прочие датчики через делитель 39 kOhm / 11 kΩ
-#define RESET_Pin    5
+
+/*  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок от 5.3.0 ------------------------------   
+SoftwareSerial SIM800(4, 5);                // для новых плат начиная с версии RX,TX
+#define ONE_WIRE_BUS A5                     // https://github.com/PaulStoffregen/OneWire
+#define FIRST_P_Pin  10                     // на реле первого положения замка зажигания с 8-го пина ардуино
+#define SECOND_P     11                     // на реле зажигания, через транзистор с 9-го пина ардуино
+#define STARTER_Pin  12                     // на реле стартера, через транзистор с 12-го пина ардуино
+#define Lock_Pin     9                     // реле на кнопку "заблокировать дверь"
+#define Unlock_Pin   8                     // реле на кнопку "разаблокировать дверь"
+#define LED_Pin      13                     // на светодиод (моргалку)
+#define BAT_Pin      A7                     // на батарею, через делитель напряжения 39кОм / 11 кОм
+#define Feedback_Pin A6                     // на провод от замка зажигания для обратной связи по проводу ON
+#define STOP_Pin     A0                     // на концевик педали тормоза для отключения режима прогрева
+#define PSO_Pin      A1                     // на прочие датчики через делитель 39 kOhm / 11 kΩ
+*/
+
+
+OneWire oneWire(ONE_WIRE_BUS); 
+DallasTemperature sensors(&oneWire);
 /*  ----------------------------------------- НАСТРОЙКИ MQTT брокера---------------------------------------------------------   */
 const char MQTT_user[10] = "drive2ru";      // api.cloudmqtt.com > Details > User  
 const char MQTT_pass[15] = "martinhol221";  // api.cloudmqtt.com > Details > Password
