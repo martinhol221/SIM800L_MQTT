@@ -3,35 +3,38 @@
 
 //  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок до 1.7.6 (c Arduino Pro Mini) ------------------------------ 
 
-SoftwareSerial SIM800(7, 6);                // для новых плат начиная с версии RX,TX
-#define ONE_WIRE_BUS 4                      // https://github.com/PaulStoffregen/OneWire
+SoftwareSerial SIM800(7, 6);                // для старых плат начиная с версии RX,TX
+#define ONE_WIRE_BUS 4                      // пин датчика DS18B20, https://github.com/PaulStoffregen/OneWire
 #define FIRST_P_Pin  8                      // на реле первого положения замка зажигания с 8-го пина ардуино
 #define SECOND_P     9                      // на реле зажигания, через транзистор с 9-го пина ардуино
 #define STARTER_Pin  12                     // на реле стартера, через транзистор с 12-го пина ардуино
 #define Lock_Pin     10                     // реле на кнопку "заблокировать дверь"
 #define Unlock_Pin   11                     // реле на кнопку "разаблокировать дверь"
-#define LED_Pin      13                     // на светодиод (моргалку)
+#define LED_Pin      13                     // на светодиод (моргалку) 6-й транзистор
 #define BAT_Pin      A0                     // на батарею, через делитель напряжения 39кОм / 11 кОм
 #define Feedback_Pin A1                     // на провод от замка зажигания для обратной связи по проводу ON
 #define STOP_Pin     A2                     // на концевик педали тормоза для отключения режима прогрева
 #define PSO_Pin      A3                     // на прочие датчики через делитель 39 kOhm / 11 kΩ
+#define RESET_Pin    5                      // аппаратная перезагрузка модема, по сути не задействован
 
 //  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок от 5.3.0  (c Atmega328 на самой плате)--------------------- 
 /*
-SoftwareSerial SIM800(4, 5);                // для новых плат начиная с версии RX,TX
-#define ONE_WIRE_BUS A5                     // https://github.com/PaulStoffregen/OneWire
-#define FIRST_P_Pin  10                     // на реле первого положения замка зажигания с 8-го пина ардуино
-#define SECOND_P     11                     // на реле зажигания, через транзистор с 9-го пина ардуино
-#define STARTER_Pin  12                     // на реле стартера, через транзистор с 12-го пина ардуино
-#define Lock_Pin     9                     // реле на кнопку "заблокировать дверь"
-#define Unlock_Pin   8                     // реле на кнопку "разаблокировать дверь"
-#define LED_Pin      13                     // на светодиод (моргалку)
+SoftwareSerial SIM800(4, 5);                // для новых плат начиная с 5.3.0 пины RX,TX 
+#define ONE_WIRE_BUS A5                     // пин датчика DS18B20, библиотека тут https://github.com/PaulStoffregen/OneWire
+#define FIRST_P_Pin  10                     // на реле K1 на плате
+#define SECOND_P     11                     // на реле К2 на плате
+#define STARTER_Pin  12                     // на реле К3 на плате
+#define K4           9                      // на реле K4 на плате под различные нужды
+#define K5           8                      // на реле K5  внешнее под различные нужды
+#define Lock_Pin     6                      // на реле K6 внешнее на кнопку "заблокировать дверь"
+#define Unlock_Pin   7                      // на реле K7 внешнее на кнопку "разаблокировать дверь"
+#define LED_Pin      13                     // на светодиод на плате
 #define BAT_Pin      A7                     // на батарею, через делитель напряжения 39кОм / 11 кОм
 #define Feedback_Pin A6                     // на провод от замка зажигания для обратной связи по проводу ON
 #define STOP_Pin     A0                     // на концевик педали тормоза для отключения режима прогрева
 #define PSO_Pin      A1                     // на прочие датчики через делитель 39 kOhm / 11 kΩ
+#define RESET_Pin    A3                     // аппаратная перезагрузка модема, по сути не задействован
 */
-
 
 OneWire oneWire(ONE_WIRE_BUS); 
 DallasTemperature sensors(&oneWire);
@@ -44,7 +47,7 @@ String MQTT_SERVER = "m54.cloudmqtt.com";   // api.cloudmqtt.com > Details > Ser
 String PORT = "10077";                      // api.cloudmqtt.com > Details > Port    порт MQTT брокера НЕ SSL !
 /*  ----------------------------------------- ИНДИВИДУАЛЬНЫЕ НАСТРОЙКИ !!!---------------------------------------------------------   */
 String call_phone=  "+375000000000";        // телефон входящего вызова  для управления DTMF
-String call_phone2= "+375000000001";        // телефон для автосброса 
+String call_phone2= "+375000000001";        // телефон для автосброса могут работать не корректно
 String call_phone3= "+375000000002";        // телефон для автосброса 
 String call_phone4= "+375000000003";        // телефон для автосброса 
 String APN = "internet.mts.by";             // тчка доступа выхода в интернет вашего сотового оператора
