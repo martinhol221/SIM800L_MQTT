@@ -241,12 +241,11 @@ else if (at.indexOf("SMS Ready") > -1 || at.indexOf("NO CARRIER") > -1 ) {SIM800
 else if (at.indexOf("+SAPBR: 1,3") > -1)                                  {SIM800.println("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\""), delay(200);} 
 else if (at.indexOf("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"\r\r\nOK") > -1)    {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""), delay (500); }
 else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), interval = 3 ;} // устанавливаем соеденение   
-//else if (at.indexOf("AT+SAPBR=1,1\r\r\nOK") > -1 )                        {SIM800.println("AT+SAPBR=2,1"), delay (1000);} // проверяем статус соединения  
 else if (at.indexOf("+SAPBR: 1,1") > -1 )                                 {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);}
 else if (at.indexOf("CONNECT FAIL") > -1 )    {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 6 ;}
 else if (at.indexOf("CONNECT OK") > -1)                                            {MQTT_CONNECT();}
 //else if (at.indexOf("ALREADY CONNECT") > -1)     {SIM800.println("AT+CIPSEND"), delay (200); 
-else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), delay (200); 
+else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), delay (200); // если не "влезает" "ALREADY CONNECT"
                                                   MQTT_FloatPub ("C5/ds0",      TempDS[0],2);
                                                   MQTT_FloatPub ("C5/ds1",      TempDS[1],2);
                                           //      MQTT_FloatPub ("C5/ds2",      TempDS[2],2);
@@ -265,7 +264,7 @@ else if (at.indexOf("C5/comandlock1",4) > -1 )      {blocking(1), attachInterrup
 else if (at.indexOf("C5/comandlock0",4) > -1 )      {blocking(0), detachInterrupt(1);}                         // команда снятия с хораны и отключения прерывания на датчик вибрации 
 else if (at.indexOf("C5/settimer",4) > -1 )         {Timer = at.substring(at.indexOf("")+15, at.indexOf("")+18).toInt();}
 else if (at.indexOf("C5/comandstop",4) > -1 )       {heatingstop(); }     // команда остановки прогрева
-else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart(); }   // команда запуска прогрева
+else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart(); }     // команда запуска прогрева
 else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Команда обнвления");
                                                           SIM800.println("AT+CIPSEND"), delay (200);  
                                                           MQTT_FloatPub ("C5/ds0",      TempDS[0],2);
