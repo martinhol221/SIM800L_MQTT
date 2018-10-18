@@ -242,8 +242,9 @@ else if (at.indexOf("SMS Ready") > -1 || at.indexOf("NO CARRIER") > -1 ) {SIM800
 else if (at.indexOf("+SAPBR: 1,3") > -1)                                  {SIM800.println("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\""), delay(200);} 
 else if (at.indexOf("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"\r\r\nOK") > -1)    {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""), delay (500); }
 else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), interval = 3 ;} // устанавливаем соеденение   
-else if (at.indexOf("+SAPBR: 1,1") > -1 )                                 {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);}
-else if (at.indexOf("CONNECT FAIL") > -1 )    {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 6 ;}
+else if (at.indexOf("+SAPBR: 1,1") > -1 )        {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);}
+else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 3 ;} // костыль 1
+else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 3 ;} // костыль 2
 else if (at.indexOf("CONNECT OK") > -1)                                            {MQTT_CONNECT();}
 //else if (at.indexOf("ALREADY CONNECT") > -1)     {SIM800.println("AT+CIPSEND"), delay (200); 
 else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), delay (200); // если не "влезает" "ALREADY CONNECT"
