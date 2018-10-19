@@ -60,7 +60,7 @@ float TempDS[11];                           // массив хранения т�
 float Vbat,V_min;                                 // переменная хранящая напряжение бортовой сети
 float m = 68.01;                            // делитель для перевода АЦП в вольты для резистров 39/11kOm
 unsigned long Time1, Time2 = 0;
-int Timer, inDS, count = 0;
+int Timer, inDS, count, error_CF, error_C;
 int interval = 4;                           // интервал тправки данных на сервер после загрузки ардуино
 bool heating = false;                       // переменная состояния режим прогрева двигателя
 bool ring = false;                          // флаг момента снятия трубки
@@ -243,8 +243,8 @@ else if (at.indexOf("+SAPBR: 1,3") > -1)                                  {SIM80
 else if (at.indexOf("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"\r\r\nOK") > -1)    {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""), delay (500); }
 else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), interval = 3 ;} // устанавливаем соеденение   
 else if (at.indexOf("+SAPBR: 1,1") > -1 )        {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);}
-else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 3 ;} // костыль 1
-else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 3 ;} // костыль 2
+else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), error_CF++, delay (1000), interval = 3 ;} // костыль 1
+else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), error_C++, delay (1000), interval = 3 ;} // костыль 2
 else if (at.indexOf("CONNECT OK") > -1)                                            {MQTT_CONNECT();}
 else if (at.indexOf("+CIPGSMLOC: 0,") > -1   )   {String LAT = at.substring(at.indexOf("+CIPGSMLOC: 0,")+24, at.indexOf("+CIPGSMLOC: 0,")+33);
                                                   String LNG = at.substring(at.indexOf("+CIPGSMLOC: 0,")+14, at.indexOf("+CIPGSMLOC: 0,")+23); 
@@ -266,6 +266,8 @@ else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), 
                                                   MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
                                                   MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
                                                   MQTT_FloatPub ("C5/engine",   heating,0);
+                                                  MQTT_FloatPub ("C5/C", error_C,0);
+                                                  MQTT_FloatPub ("C5/CF", error_CF,0); 
                                                   MQTT_FloatPub ("C5/uptime",   millis()/3600000,0); 
                                                   SIM800.write(0x1A);}
                      
