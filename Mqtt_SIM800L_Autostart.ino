@@ -246,6 +246,15 @@ else if (at.indexOf("+SAPBR: 1,1") > -1 )        {delay (200),  SIM800.println("
 else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 3 ;} // костыль 1
 else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), delay (1000), interval = 3 ;} // костыль 2
 else if (at.indexOf("CONNECT OK") > -1)                                            {MQTT_CONNECT();}
+else if (at.indexOf("+CIPGSMLOC: 0,") > -1   )   {String LAT = at.substring(at.indexOf("+CIPGSMLOC: 0,")+24, at.indexOf("+CIPGSMLOC: 0,")+33);
+                                                  String LNG = at.substring(at.indexOf("+CIPGSMLOC: 0,")+14, at.indexOf("+CIPGSMLOC: 0,")+23); 
+                                                  SIM800.println("AT+CIPSEND"), delay (200);
+                                                  MQTT_PUB ("C5/gps", "\n https://www.google.com/maps/place/"+LAT+","+LNG), SIM800.write(0x1A);} 
+ 
+else if (at.indexOf("+CUSD: 0,") > -1   )        {String BALANS = at.substring(at.indexOf("\"")+2); 
+                                                  BALANS = BALANS.substring(0, BALANS.indexOf("\""));
+                                                  SIM800.println("AT+CIPSEND"), delay (200) MQTT_PUB ("C5/ussd", BALANS), SIM800.write(0x1A);} 
+ 
 //else if (at.indexOf("ALREADY CONNECT") > -1)     {SIM800.println("AT+CIPSEND"), delay (200); 
 else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), delay (200); // если не "влезает" "ALREADY CONNECT"
                                                   MQTT_FloatPub ("C5/ds0",      TempDS[0],2);
@@ -265,6 +274,8 @@ else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), 
 else if (at.indexOf("C5/comandlock1",4) > -1 )      {blocking(1), attachInterrupt(1, callback, FALLING);}     // команда постановки на охрану и включения прерывания по датчику вибрации     
 else if (at.indexOf("C5/comandlock0",4) > -1 )      {blocking(0), detachInterrupt(1);}                         // команда снятия с хораны и отключения прерывания на датчик вибрации 
 else if (at.indexOf("C5/settimer",4) > -1 )         {Timer = at.substring(at.indexOf("")+15, at.indexOf("")+18).toInt();}
+else if (at.indexOf("C5/comandbalans",4) > -1 )     {SIM800.println("AT+CUSD=1,\"*100#\""); }     // запрос баланса
+else if (at.indexOf("C5/comandlocation",4) > -1 )   {SIM800.println("AT+CIPGSMLOC=1,1"); }        // запрос локации
 else if (at.indexOf("C5/comandstop",4) > -1 )       {heatingstop(); }     // команда остановки прогрева
 else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart(); }     // команда запуска прогрева
 else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Команда обнвления");
