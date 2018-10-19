@@ -247,7 +247,7 @@ else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"),
 else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), error_C++, delay (1000), interval = 3 ;} // костыль 2
 else if (at.indexOf("CONNECT OK") > -1)           {MQTT_CONNECT();}
 
-else if (at.indexOf("+CUSD:") > -1   )           {String BALANS = at.substring(12, 26); 
+else if (at.indexOf("+CUSD:") > -1   )           {String BALANS = at.substring(13, 26); 
                                                  // BALANS = BALANS.substring(0, BALANS.indexOf("\""));
                                                   SIM800.println("AT+CIPSEND"), delay (200);
                                                   MQTT_PUB ("C5/status", BALANS.c_str()), SIM800.write(0x1A);} 
