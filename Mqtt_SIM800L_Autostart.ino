@@ -241,16 +241,25 @@ else if (at.indexOf("SMS Ready") > -1 || at.indexOf("NO CARRIER") > -1 ) {SIM800
 /*  -------------------------------------- проверяем соеденеиние с ИНТЕРНЕТ, конектимся к серверу------------------------------------------------------- */
 else if (at.indexOf("+SAPBR: 1,3") > -1)                                  {SIM800.println("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\""), delay(200);} 
 else if (at.indexOf("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"\r\r\nOK") > -1)    {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""), delay (500); }
-else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), interval = 3 ;} // устанавливаем соеденение   
+else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), interval = 2 ;} // устанавливаем соеденение   
 else if (at.indexOf("+SAPBR: 1,1") > -1 )        {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);}
 else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), error_CF++, delay (1000), interval = 3 ;} // костыль 1
 else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), error_C++, delay (1000), interval = 3 ;} // костыль 2
 else if (at.indexOf("CONNECT OK") > -1)           {MQTT_CONNECT();}
 
-else if (at.indexOf("+CUSD:") > -1   )           {String BALANS = at.substring(13, 26); 
-                                                 // BALANS = BALANS.substring(0, BALANS.indexOf("\""));
+else if (at.indexOf("+CIPGSMLOC: 0,") > -1   )   {String LAT = at.substring(24,33);
+                                                  String LNG = at.substring(14,23); 
+                                                  String GPS = "https://www.google.com/maps/place/"+LAT+","+LNG;
+                                                  SIM800.println("AT+CIPSEND"), delay (200);
+                                                  MQTT_PUB ("C5/gps", GPS.c_str()), SIM800.write(0x1A);}
+                                                  
+else if (at.indexOf("+CUSD:") > -1   )           {String BALANS = at.substring(13, 26);
                                                   SIM800.println("AT+CIPSEND"), delay (200);
                                                   MQTT_PUB ("C5/status", BALANS.c_str()), SIM800.write(0x1A);} 
+                                                  
+else if (at.indexOf("+CSQ:") > -1   )            {String RSSI = at.substring(6);  // +CSQ: 31,0
+                                                  SIM800.println("AT+CIPSEND"), delay (200);
+                                                  MQTT_PUB ("C5/status", RSSI.c_str()), SIM800.write(0x1A);} 
  
 //else if (at.indexOf("ALREADY CONNECT") > -1)     {SIM800.println("AT+CIPSEND"), delay (200); 
 else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), delay (200); // если не "влезает" "ALREADY CONNECT"
@@ -274,6 +283,8 @@ else if (at.indexOf("C5/comandlock1",4) > -1 )      {blocking(1), attachInterrup
 else if (at.indexOf("C5/comandlock0",4) > -1 )      {blocking(0), detachInterrupt(1);}                         // команда снятия с хораны и отключения прерывания на датчик вибрации 
 else if (at.indexOf("C5/settimer",4) > -1 )         {Timer = at.substring(at.indexOf("")+15, at.indexOf("")+18).toInt();}
 else if (at.indexOf("C5/comandbalans",4) > -1 )     {SIM800.println("AT+CUSD=1,\"*100#\""); }     // запрос баланса
+else if (at.indexOf("C5/comandrssi",4) > -1 )       {SIM800.println("AT+CSQ"); }                  // запрос уровня сигнала
+else if (at.indexOf("C5/comandlocation",4) > -1 )   {SIM800.println("AT+CIPGSMLOC=1,1"); }        // запрос локации
 else if (at.indexOf("C5/comandstop",4) > -1 )       {heatingstop(); }     // команда остановки прогрева
 else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart(); }     // команда запуска прогрева
 else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Команда обнвления");
