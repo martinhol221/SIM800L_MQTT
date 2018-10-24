@@ -308,9 +308,10 @@ else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Ком�
             
    at = "";      }                                                  // Возвращаем ответ можема в монитор порта , очищаем переменную
 
-       if (pin.indexOf("123") > -1 ){ pin= "", enginestart();  
-} else if (pin.indexOf("789") > -1 ){ pin= "", delay(1500), SIM800.println("ATH0"),heatingstop();  
-} else if (pin.indexOf("#")   > -1 ){ pin= "", SIM800.println("ATH0");    }
+       if (pin.indexOf("123") > -1 ){ pin= "", enginestart();} 
+  else if (pin.indexOf("777") > -1 ){ pin= "", SIM800.println("AT+SAPBR=1,1");}
+  else if (pin.indexOf("789") > -1 ){ pin= "", delay(1500), SIM800.println("ATH0"),heatingstop();} 
+  else if (pin.indexOf("#")   > -1 ){ pin= "", SIM800.println("ATH0");}
                               
  } 
 
