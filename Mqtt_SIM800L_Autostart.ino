@@ -178,7 +178,7 @@ void detection(){                                                 // услов�
     Serial.println ("");
     
     if (heating == true && Timer <1)    heatingstop();      // остановка прогрева если закончился отсчет таймера
- //   if (heating == true && TempDS[0] > 80)  digitalWrite(K5, HIGH);      // Включаем печку если двигатель нагрелся
+ //   if (heating == true && TempDS[0] > 86)  heatingstop();   // остановить прогрев если температура выше 86 град
     interval--;
     if (interval <1) interval = 6, SIM800.println("AT+SAPBR=2,1"), delay (200);    // подключаемся к GPRS 
                       
