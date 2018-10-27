@@ -275,6 +275,7 @@ else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), 
                                           //      MQTT_FloatPub ("C5/ds3",      TempDS[3],2);
                                                   MQTT_FloatPub ("C5/vbat",     Vbat,2);
                                                   MQTT_FloatPub ("C5/timer",    Timer,0);
+                                                 // MQTT_PUB("C5/security", digitalRead(A3) ? "lock1" : "lock0");
                                                   MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
                                                   MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
                                                   MQTT_FloatPub ("C5/engine",   heating,0);
