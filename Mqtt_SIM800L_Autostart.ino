@@ -253,9 +253,7 @@ else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"),
 else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), error_C++, delay (1000), interval = 3 ;} // костыль 2
 else if (at.indexOf("CONNECT OK") > -1)           {MQTT_CONNECT();}
 
-else if (at.indexOf("+CIPGSMLOC: 0,") > -1   )   {String LAT = at.substring(24,33);
-                                                  String LNG = at.substring(14,23); 
-                                                  String GPS = "https://www.google.com/maps/place/"+LAT+","+LNG;
+else if (at.indexOf("+CIPGSMLOC: 0,") > -1   )   {String GPS = at.substring(26,35)+","+ at.substring(16,25);
                                                   SIM800.println("AT+CIPSEND"), delay (200);
                                                   MQTT_PUB ("C5/gps", GPS.c_str()), SIM800.write(0x1A);}
                                                   
