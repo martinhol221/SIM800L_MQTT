@@ -259,11 +259,11 @@ else if (at.indexOf("+CIPGSMLOC: 0,") > -1   )   {String GPS = at.substring(26,3
                                                   
 else if (at.indexOf("+CUSD:") > -1   )           {String BALANS = at.substring(13, 26);
                                                   SIM800.println("AT+CIPSEND"), delay (200);
-                                                  MQTT_PUB ("C5/status", BALANS.c_str()), SIM800.write(0x1A);} 
+                                                  MQTT_PUB ("C5/ussd", BALANS.c_str()), SIM800.write(0x1A);} 
                                                   
 else if (at.indexOf("+CSQ:") > -1   )            {String RSSI = at.substring(6);  // +CSQ: 31,0
                                                   SIM800.println("AT+CIPSEND"), delay (200);
-                                                  MQTT_PUB ("C5/status", RSSI.c_str()), SIM800.write(0x1A);} 
+                                                  MQTT_PUB ("C5/rssi", RSSI.c_str()), SIM800.write(0x1A);} 
  
 //else if (at.indexOf("ALREADY CONNECT") > -1)     {SIM800.println("AT+CIPSEND"), delay (200); 
 else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), delay (200); // если не "влезает" "ALREADY CONNECT"
