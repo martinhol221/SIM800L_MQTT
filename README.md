@@ -8,6 +8,8 @@ https://www.youtube.com/watch?v=HzQ7oy439Qk
 
 ![](https://github.com/martinhol221/SIM800L_DTMF_control/raw/master/img/conecting-001.JPG)
 
+![](https://github.com/martinhol221/SIM800L_DTMF_control/blob/master/img/shema.JPG)
+
 **Останется:**
 
 * Входящий звонок, автоподъем, распознавание DTMF команд `123`,`789`,`*` и `#`
