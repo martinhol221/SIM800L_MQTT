@@ -92,7 +92,7 @@ void setup() {
   SIM800.begin(9600);                       //скорость связи с модемом
  // SIM800.setTimeout(500);                 // тайм аут ожидания ответа
   
-  Serial.println("MQTT |22/10/2018"); 
+  Serial.println("MQTT |13/11/2018"); 
   delay (1000);
   SIM800_reset();
  
@@ -250,7 +250,7 @@ else if (at.indexOf("+SAPBR: 1,3") > -1)                                  {SIM80
 else if (at.indexOf("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"\r\r\nOK") > -1)    {SIM800.println("AT+SAPBR=3,1, \"APN\",\""+APN+"\""), delay (500); }
 else if (at.indexOf("AT+SAPBR=3,1, \"APN\",\""+APN+"\"\r\r\nOK") > -1 )   {SIM800.println("AT+SAPBR=1,1"), interval = 2 ;} // устанавливаем соеденение   
 else if (at.indexOf("+SAPBR: 1,1") > -1 )        {delay (200),  SIM800.println("AT+CIPSTART=\"TCP\",\""+MQTT_SERVER+"\",\""+PORT+"\""), delay (1000);}
-else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), error_CF++, delay (1000), interval = 3 ;} // костыль 1
+else if (at.indexOf("CONNECT FAIL") > -1 )       {SIM800.println("AT+CFUN=1,1"), error_CF++, delay (1000), interval = 3 ;}  // костыль 1
 else if (at.indexOf("CLOSED") > -1 )             {SIM800.println("AT+CFUN=1,1"), error_C++,  delay (1000), interval = 3 ;}  // костыль 2
 else if (at.indexOf("+CME ERROR:") > -1 )        {SIM800.println("AT+CIPCLOSE"), error_CF++, delay (1000), interval = 3 ;}  // костыль 4 
 else if (at.indexOf("CONNECT OK") > -1)          {MQTT_CONNECT();}
@@ -280,8 +280,6 @@ else if (at.indexOf("ALREAD") > -1)              {SIM800.println("AT+CIPSEND"), 
                                                   MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
                                                   MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
                                                   MQTT_FloatPub ("C5/engine",   heating,0);
-                                                  MQTT_FloatPub ("C5/C", error_C,0);
-                                                  MQTT_FloatPub ("C5/CF", error_CF,0); 
                                                   MQTT_FloatPub ("C5/uptime",   millis()/3600000,0); 
                                                   SIM800.write(0x1A);}
                      
@@ -305,6 +303,8 @@ else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Ком�
                                                           MQTT_FloatPub ("C5/timer",    Timer,0);
                                                           MQTT_PUB      ("C5/security", Security ? "lock1" : "lock0");
                                                           MQTT_PUB      ("C5/engine",   heating ? "start" : "stop");
+                                                          MQTT_FloatPub ("C5/C", error_C,0);
+                                                          MQTT_FloatPub ("C5/CF", error_CF,0); 
                                                           MQTT_FloatPub ("C5/uptime",   millis()/3600000,0); 
                                                           SIM800.write(0x1A); 
                                                           interval = 6; // швырнуть данные на сервер и ждать 60 сек
