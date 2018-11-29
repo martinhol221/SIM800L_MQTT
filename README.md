@@ -8,6 +8,7 @@ https://www.youtube.com/watch?v=HzQ7oy439Qk
 
 ![](https://github.com/martinhol221/SIM800L_DTMF_control/raw/master/img/conecting-001.JPG)
 ![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/PCB/plata.JPG)
+![](https://github.com/martinhol221/SIM800L_MQTT/blob/master/PCB/plata2.JPG)
 ![](https://github.com/martinhol221/SIM800L_DTMF_control/blob/master/img/shema.JPG)
 
 **Останется:**
