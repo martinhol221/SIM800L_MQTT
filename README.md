@@ -7,7 +7,7 @@ https://www.youtube.com/watch?v=HzQ7oy439Qk
 [Само устройство останется таким же](https://github.com/martinhol221/SIM800L_DTMF_control/blob/master/README.md) изменится только прошивка и функции управления. 
 
 ![](https://github.com/martinhol221/SIM800L_DTMF_control/raw/master/img/conecting-001.JPG)
-
+![](https://github.com/martinhol221/SIM800L_DTMF_control/PCB/top_layer1.7.6.pdf)
 ![](https://github.com/martinhol221/SIM800L_DTMF_control/blob/master/img/shema.JPG)
 
 **Останется:**
