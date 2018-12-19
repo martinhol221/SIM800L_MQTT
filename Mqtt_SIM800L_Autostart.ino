@@ -160,7 +160,7 @@ void heatingstop() {                                // программа ост
     digitalWrite(SECOND_P,    LOW), delay (100);
     digitalWrite(FIRST_P_Pin, LOW), delay (100);
     digitalWrite(IMMO, LOW),        delay (100);
-    digitalWrite(K5, LOW);
+    digitalWrite(K5, LOW), digitalWrite(13, LOW);
     heating= false, Timer = 0;
     Serial.println ("All OFF"); }
 
@@ -291,6 +291,7 @@ else if (at.indexOf("C5/settimer",4) > -1 )         {Timer = at.substring(at.ind
 else if (at.indexOf("C5/comandbalans",4) > -1 )     {SIM800.println("AT+CUSD=1,\"*100#\""); }     // запрос баланса
 else if (at.indexOf("C5/comandrssi",4) > -1 )       {SIM800.println("AT+CSQ"); }                  // запрос уровня сигнала
 else if (at.indexOf("C5/comandlocation",4) > -1 )   {SIM800.println("AT+CIPGSMLOC=1,1"); }        // запрос локации
+else if (at.indexOf("C5/comandrelay6on",4) > -1 )   {Timer = 30, digitalWrite(13, HIGH), heating = true; }      //  включение реле K6
 else if (at.indexOf("C5/comandstop",4) > -1 )       {heatingstop(); }     // команда остановки прогрева
 else if (at.indexOf("C5/comandstart",4) > -1 )      {enginestart(); }     // команда запуска прогрева
 else if (at.indexOf("C5/comandRefresh",4) > -1 )    {// Serial.println ("Команда обнвления");
