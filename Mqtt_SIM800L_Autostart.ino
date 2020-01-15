@@ -1,4 +1,5 @@
 #include <SoftwareSerial.h>
+//В папке с Arduino IDE в файле SoftwareSerial.h строку #define _SS_MAX_RX_BUFF 64 заменяем на  #define _SS_MAX_RX_BUFF 255. 
 #include <DallasTemperature.h>      // https://github.com/milesburton/Arduino-Temperature-Control-Library
 
 //  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок до 1.7.6 (c Arduino Pro Mini) ------------------------------ 
