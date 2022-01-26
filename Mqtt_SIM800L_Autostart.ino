@@ -2,26 +2,7 @@
 //В папке с Arduino IDE в файле SoftwareSerial.h строку #define _SS_MAX_RX_BUFF 64 заменяем на  #define _SS_MAX_RX_BUFF 255. 
 #include <DallasTemperature.h>      // https://github.com/milesburton/Arduino-Temperature-Control-Library
 
-//  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок до 1.7.6 (c Arduino Pro Mini) ------------------------------ 
 
-SoftwareSerial SIM800(7, 6);                // для старых плат начиная с версии RX,TX
-#define ONE_WIRE_BUS 4                      // пин датчика DS18B20, https://github.com/PaulStoffregen/OneWire
-#define FIRST_P_Pin  8                      // на реле первого положения замка зажигания с 8-го пина ардуино
-#define SECOND_P     9                      // на реле зажигания, через транзистор с 9-го пина ардуино
-#define STARTER_Pin  12                     // на реле стартера, через транзистор с 12-го пина ардуино
-#define Lock_Pin     10                     // реле на кнопку "заблокировать дверь"
-#define Unlock_Pin   11                     // реле на кнопку "разаблокировать дверь"
-#define LED_Pin      13                     // на светодиод (моргалку) 6-й транзистор
-#define BAT_Pin      A0                     // на батарею, через делитель напряжения 39кОм / 11 кОм
-#define Feedback_Pin A1                     // на провод от замка зажигания для обратной связи по проводу ON
-#define STOP_Pin     A2                     // на концевик педали тормоза для отключения режима прогрева
-#define PSO_Pin      A3                     // на прочие датчики через делитель 39 kOhm / 11 kΩ
-#define K5           A5                     // на плате не реализован, снимать сигнал с ардуинки
-#define IMMO         A4                     // на плате не реализован, снимать сигнал с ардуинк
-#define RESET_Pin    5                      // аппаратная перезагрузка модема, по сути не задействован
-
-//  ----------------------------------------- НАЗНАЧАЕМ ВЫВОДЫ для платок от 5.3.0  (c Atmega328 на самой плате)--------------------- 
-/*
 SoftwareSerial SIM800(4, 5);                // для новых плат начиная с 5.3.0 пины RX,TX 
 #define ONE_WIRE_BUS A5                     // пин датчика DS18B20, библиотека тут https://github.com/PaulStoffregen/OneWire
 #define FIRST_P_Pin  10                     // на реле K1 на плате ПОТРЕБИТЕЛИ
@@ -38,7 +19,6 @@ SoftwareSerial SIM800(4, 5);                // для новых плат нач
 #define RESET_Pin    A3                     // аппаратная перезагрузка модема, по сути не задействован
 #define BAT_Pin      A7                     // внутри платы соединен с +12, через делитель напряжения 39кОм / 11 кОм
 #define Feedback_Pin A6                     // обратная связь по реле K3, проверка на включенное зажигание
-*/
 
 OneWire oneWire(ONE_WIRE_BUS); 
 DallasTemperature sensors(&oneWire);
